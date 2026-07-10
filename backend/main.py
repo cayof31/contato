@@ -68,7 +68,7 @@ def clean_and_format_data(df: pd.DataFrame) -> pd.DataFrame:
     col_notes = find_column(df, ['notes', 'observações', 'obs', 'comments'])
 
     google_contacts_df = pd.DataFrame()
-    data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    data = datetime.now().strftime("%Y-%m-%d")
     # Processa e formata cada campo
     if col_first_name:
         cleaned = df[col_first_name].astype(str).str.replace(r'[^\w\sÀ-ÖØ-öø-ÿ]', '', regex=True).str.strip()
