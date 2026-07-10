@@ -56,7 +56,7 @@ export default function Home() {
     formData.append('filter', filterMode);
 
     try {
-      const response = await fetch('http://localhost:8000/api/format-contacts', {
+      const response = await fetch('https://contato-0f48.onrender.com/api/format-contacts', {
         method: 'POST',
         body: formData,
       });
