@@ -15,7 +15,8 @@ app = FastAPI(
 
 # Configura o CORS para permitir requisições do frontend (Next.js)
 origins = [
-    "https://micro-sass.com",
+    "https://micro-sass.com",          
+    "https://contato.micro-sass.com"
 ]
 
 app.add_middleware(
