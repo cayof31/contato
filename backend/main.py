@@ -125,7 +125,7 @@ def clean_and_format_data(df: pd.DataFrame) -> pd.DataFrame:
     for col in google_template_columns:
         if col not in google_contacts_df.columns:
             google_contacts_df[col] = ""
-    google_contacts_df['Last Name'] += + " [" + data + "]"
+    google_contacts_df['Last Name'] += " [" + data + "]"
     return google_contacts_df[google_template_columns]
 
 
