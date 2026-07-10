@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Organizador de Contatos",
   description: "Transformandos planilhas em arquivos csv prontos para importação no Google Contacts.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon2.png",
+  },
 };
 
 export default function RootLayout({
