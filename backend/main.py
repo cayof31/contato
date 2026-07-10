@@ -1,6 +1,7 @@
 import re
 import io
 import os
+from dotenv import load_dotenv
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
@@ -13,6 +14,7 @@ app = FastAPI(
     description="API para limpar e formatar arquivos CSV de contatos.",
     version="1.0.0"
 )
+load_dotenv()
 origins = os.getenv("ALLOWED_ORIGINS").split(",")
 # Configura o CORS para permitir requisições do frontend (Next.js)
 
@@ -76,7 +78,8 @@ def clean_and_format_data(df: pd.DataFrame) -> pd.DataFrame:
 
     if col_last_name:
         cleaned = df[col_last_name].astype(str).str.replace(r'[^\w\sÀ-ÖØ-öø-ÿ]', '', regex=True).str.strip()
-        google_contacts_df['Last Name'] = cleaned.str.title() + " [" + data + "]"
+        google_contacts_df['Last Name'] = cleaned.str.title()
+        print(f"Last Name column found: {google_contacts_df['Last Name']}")
     else:
         google_contacts_df['Last Name'] = ""
 
@@ -122,7 +125,7 @@ def clean_and_format_data(df: pd.DataFrame) -> pd.DataFrame:
     for col in google_template_columns:
         if col not in google_contacts_df.columns:
             google_contacts_df[col] = ""
-
+    google_contacts_df['Last Name'] += + " [" + data + "]"
     return google_contacts_df[google_template_columns]
 
 
@@ -191,4 +194,5 @@ def get_root():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    # uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
