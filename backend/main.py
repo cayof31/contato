@@ -1,5 +1,6 @@
 import re
 import io
+import os
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
@@ -12,12 +13,8 @@ app = FastAPI(
     description="API para limpar e formatar arquivos CSV de contatos.",
     version="1.0.0"
 )
-
+origins = os.getenv("ALLOWED_ORIGINS").split(",")
 # Configura o CORS para permitir requisições do frontend (Next.js)
-origins = [
-    "https://micro-sass.com",          
-    "https://contato.micro-sass.com"
-]
 
 app.add_middleware(
     CORSMiddleware,
