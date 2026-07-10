@@ -6,7 +6,7 @@ import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-
+from datetime import datetime
 # Cria a instância da aplicação FastAPI
 app = FastAPI(
     title="Contato Micro-SaaS API",
@@ -66,7 +66,7 @@ def clean_and_format_data(df: pd.DataFrame) -> pd.DataFrame:
     col_notes = find_column(df, ['notes', 'observações', 'obs', 'comments'])
 
     google_contacts_df = pd.DataFrame()
-
+    data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # Processa e formata cada campo
     if col_first_name:
         cleaned = df[col_first_name].astype(str).str.replace(r'[^\w\sÀ-ÖØ-öø-ÿ]', '', regex=True).str.strip()
@@ -76,7 +76,7 @@ def clean_and_format_data(df: pd.DataFrame) -> pd.DataFrame:
 
     if col_last_name:
         cleaned = df[col_last_name].astype(str).str.replace(r'[^\w\sÀ-ÖØ-öø-ÿ]', '', regex=True).str.strip()
-        google_contacts_df['Last Name'] = cleaned.str.title()
+        google_contacts_df['Last Name'] = cleaned.str.title() + " [" + data + "]"
     else:
         google_contacts_df['Last Name'] = ""
 
